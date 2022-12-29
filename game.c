@@ -72,3 +72,7 @@ void place_initial_configuration(Game *game) {
         place_piece(game, index, initial_configuration_map[index].x, initial_configuration_map[index].y);
     }
 }
+
+void copy_game(Game *destination, Game *source) {
+    memcpy(destination, source, sizeof(Game));
+}
