@@ -1,5 +1,5 @@
 #include "move.h"
-#include "game.h"
+#include "bitboard.h"
 
 char get_piece_char(Index index);
 
@@ -24,3 +24,5 @@ char to_piece_type_char(Type type);
 void print_move(Move *move);
 
 void print_debug_info(Game *game);
+
+void print_bitboard(Bitboard *bitboard);

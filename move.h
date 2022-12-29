@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "bitboard.h"
 
 typedef struct move {
     Type piece_type;
@@ -11,3 +11,7 @@ typedef struct move {
 void empty_move(Move *move);
 
 int is_valid_move(Move *move);
+
+Index get_index_from_move(Game *game, Move *move);
+
+int apply_move(Game *game, Move *move);

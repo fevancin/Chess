@@ -172,3 +172,15 @@ void print_debug_info(Game *game) {
     if (get_turn(game) == WHITE) printf("WHITE\n");
     else printf("BLACK\n");
 }
+
+void print_bitboard(Bitboard *bitboard) {
+    int i = 0, j = 0;
+    for (i = 0; i < BOARD_DIM; i++) {
+        for (j = 0; j < BOARD_DIM; j++) {
+            if (get_bitboard_bit_and_shift(bitboard)) printf("1 ");
+            else printf("0 ");
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
