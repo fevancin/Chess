@@ -1,4 +1,4 @@
-#include "bitboard.h"
+#include "move.h"
 
 typedef double Value;
 

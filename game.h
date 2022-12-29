@@ -21,16 +21,8 @@ void remove_piece(Game *game, Index i);
 
 void move_piece(Game *game, Index index, Coordinate x, Coordinate y);
 
-typedef struct position {
-    Coordinate x;
-    Coordinate y;
-} Position;
-
 void place_initial_configuration(Game *game);
 
 void copy_game(Game *destination, Game *source);
 
 void print_game(Game *game);
-
-int write_game_to_file(Game *game, char *file_name);
-int read_game_from_file(Game *game, char *file_name);
