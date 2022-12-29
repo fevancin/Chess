@@ -25,6 +25,8 @@ typedef uint8_t Index;
 #define MAX_PAWN_INDEX ((Index)31)
 #define EMPTY ((Index)32)
 
+char get_piece_char(Index index);
+
 typedef uint8_t Type;
 #define KING ((Type)0)
 #define QUEEN ((Type)1)

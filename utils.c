@@ -8,6 +8,16 @@ Color swap_color(Color color) {
     return (color == WHITE) ? BLACK : WHITE;
 }
 
+char char_map[2][7] = {
+    {'K', 'Q', 'R', 'N', 'B', 'P', '?'},
+    {'k', 'q', 'r', 'n', 'b', 'p', '?'}
+};
+
+char get_piece_char(Index index) {
+    if (index == EMPTY) return '.';
+    return char_map[get_color(index)][get_type(index)];
+}
+
 Type type_map[PIECES_NUM] = {
     KING, KING,
     QUEEN, QUEEN,

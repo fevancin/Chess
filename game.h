@@ -29,3 +29,5 @@ typedef struct position {
 void place_initial_configuration(Game *game);
 
 void copy_game(Game *destination, Game *source);
+
+void print_game(Game *game);

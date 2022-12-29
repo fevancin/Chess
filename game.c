@@ -76,3 +76,28 @@ void place_initial_configuration(Game *game) {
 void copy_game(Game *destination, Game *source) {
     memcpy(destination, source, sizeof(Game));
 }
+
+void print_game(Game *game) {
+    if (game == NULL) return;
+    int i = 0, j = 0;
+    Index index = EMPTY;
+    printf("    a b c d e f g h\n");
+    printf("  o-----------------o\n");
+    for (i = BOARD_DIM; i > 0; i--) {
+        printf("%d |", i);
+        for (j = 0; j < BOARD_DIM; j++) {
+            index = game->board[BOARD_DIM - i][j];
+            if (index == EMPTY || !is_alive(game->pieces[index])) {
+                printf(" .");
+                continue;
+            }
+            if (get_type(index) == PAWN && is_promoted(game->pieces[index])) {
+                index = (get_color(index) == WHITE) ? MAX_QUEEN_INDEX - 1 : MAX_QUEEN_INDEX;
+            }
+            printf(" %c", get_piece_char(index));
+        }
+        printf(" | %d\n", i);
+    }
+    printf("  o-----------------o\n");
+    printf("    a b c d e f g h\n");
+}
