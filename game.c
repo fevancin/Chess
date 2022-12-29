@@ -101,3 +101,56 @@ void print_game(Game *game) {
     printf("  o-----------------o\n");
     printf("    a b c d e f g h\n");
 }
+
+int write_game_to_file(Game *game, char *file_name) {
+    if (game == NULL || file_name == NULL) return -1;
+    FILE *fp = fopen(file_name, "w");
+    if (fp == NULL) return -1;
+    Index index = 0;
+    Piece piece = 0;
+    for (index = 0; index < PIECES_NUM; index++) {
+        piece = game->pieces[index];
+        fprintf(fp, "%c %c %d %d\n",
+            to_column_char(get_y(piece)),
+            to_row_char(get_x(piece)),
+            is_alive(piece),
+            is_promoted(piece)
+        );
+    }
+    fclose(fp);
+    return 0;
+}
+
+int read_game_from_file(Game *game, char *file_name) {
+    if (game == NULL || file_name == NULL) return -1;
+    FILE *fp = fopen(file_name, "r");
+    if (fp == NULL) return -1;
+    empty_game(game);
+    Index index = 0;
+    Piece *piece = NULL;
+    char string[9];
+    for (index = 0; index < PIECES_NUM; index++) {
+        if (fgets(string, 9, fp) == NULL) {
+            fclose(fp);
+            return -1;
+        }
+        piece = &(game->pieces[index]);
+        if (!is_column_char(string[0])) return -1;
+        set_y(piece, decode_column_char(string[0]));
+        if (string[1] != ' ') return -1;
+        if (!is_row_char(string[2])) return -1;
+        set_x(piece, decode_row_char(string[2]));
+        if (string[3] != ' ') return -1;
+        if (string[4] != '0' && string[4] != '1') return -1;
+        if (string[4] == '0') kill(piece);
+        else revive(piece);
+        if (string[5] != ' ') return -1;
+        if (string[6] != '0' && string[6] != '1') return -1;
+        if (string[6] == '0') depromote(piece);
+        else promote(piece);
+        if (string[7] != '\n') return -1;
+        game->board[get_x(*piece)][get_y(*piece)] = index;
+    }
+    fclose(fp);
+    return 0;
+}

@@ -31,3 +31,6 @@ void place_initial_configuration(Game *game);
 void copy_game(Game *destination, Game *source);
 
 void print_game(Game *game);
+
+int write_game_to_file(Game *game, char *file_name);
+int read_game_from_file(Game *game, char *file_name);
