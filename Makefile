@@ -6,39 +6,39 @@ else
 	CHESS = chess
 endif
 
-chess: main.o menu.o search.o value.o bitboard.o move.o game.o piece.o utils.o
-	gcc -o chess main.o menu.o search.o value.o bitboard.o move.o game.o piece.o utils.o
+chess: obj/main.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
+	gcc -o chess obj/main.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
 
 clear:
-	$(RM) main.o menu.o search.o value.o bitboard.o move.o game.o piece.o utils.o
+	$(RM) obj/main.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
 	$(RM) $(CHESS)
 
-main.o: main.c
-	gcc -c main.c
+obj/main.o: src/main.c
+	gcc -c src/main.c -o obj/main.o
 
-menu.o: menu.c menu.h
-	gcc -c menu.c
+obj/menu.o: src/menu.c src/menu.h
+	gcc -c src/menu.c -o obj/menu.o
 
-search.o: search.c search.h
-	gcc -c search.c
+obj/search.o: src/search.c src/search.h
+	gcc -c src/search.c -o obj/search.o
 
-value.o: value.c value.h
-	gcc -c value.c
+obj/value.o: src/value.c src/value.h
+	gcc -c src/value.c -o obj/value.o
 
-bitboard.o: bitboard.c bitboard.h
-	gcc -c bitboard.c
+obj/bitboard.o: src/bitboard.c src/bitboard.h
+	gcc -c src/bitboard.c -o obj/bitboard.o
 
-move.o: move.c move.h
-	gcc -c move.c
+obj/move.o: src/move.c src/move.h
+	gcc -c src/move.c -o obj/move.o
 
-game.o: game.c game.h
-	gcc -c game.c
+obj/game.o: src/game.c src/game.h
+	gcc -c src/game.c -o obj/game.o
 
-piece.o: piece.c piece.h
-	gcc -c piece.c
+obj/piece.o: src/piece.c src/piece.h
+	gcc -c src/piece.c -o obj/piece.o
 
-utils.o: utils.c utils.h
-	gcc -c utils.c
+obj/utils.o: src/utils.c src/utils.h
+	gcc -c src/utils.c -o obj/utils.o
 
-print_utils.o: print_utils.c print_utils.h
-	gcc -c print_utils.c
+obj/print_utils.o: src/print_utils.c src/print_utils.h
+	gcc -c src/print_utils. -o obj/print_utils.oc
