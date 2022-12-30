@@ -1,4 +1,4 @@
-#include "bitboard.h"
+#include "header/bitboard.h"
 
 void set_bitboard_bit(Bitboard *bitboard, Coordinate x, Coordinate y) {
     *bitboard |= ((Bitboard)1) << (x * BOARD_DIM + y);

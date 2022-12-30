@@ -1,4 +1,4 @@
-#include "value.h"
+#include "header/value.h"
 
 Value piece_values[6] = {10000.0, 90.0, 50.0, 30.0, 30.0, 10.0};
 

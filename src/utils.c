@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "header/utils.h"
 
 int is_valid_coordinate(Coordinate coordinate) {
     return coordinate < BOARD_DIM;

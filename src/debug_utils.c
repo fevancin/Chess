@@ -1,4 +1,4 @@
-#include "print_utils.h"
+#include "header/debug_utils.h"
 
 void print_debug_info(Game *game) {
     if (game == NULL) return;

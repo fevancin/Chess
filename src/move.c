@@ -1,4 +1,4 @@
-#include "move.h"
+#include "header/move.h"
 
 void empty_move(Move *move) {
     move->piece_type = UNKNOWN;

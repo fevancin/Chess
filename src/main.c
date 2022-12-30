@@ -1,4 +1,4 @@
-#include "menu.h"
+#include "header/menu.h"
 
 int main(int argc, char *argv[]) {
     Game game;

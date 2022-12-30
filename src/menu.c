@@ -1,4 +1,4 @@
-#include "menu.h"
+#include "header/menu.h"
 
 int write_game_to_file(Game *game, char *file_name) {
     if (game == NULL || file_name == NULL) return -1;

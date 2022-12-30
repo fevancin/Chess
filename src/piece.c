@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "header/piece.h"
 
 #define X_MASK ((Piece)0x07)
 #define Y_MASK ((Piece)0xE0)

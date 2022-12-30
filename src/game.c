@@ -1,4 +1,4 @@
-#include "game.h"
+#include "header/game.h"
 
 Color get_turn(Game *game) {
     return is_promoted(game->pieces[0]) ? BLACK : WHITE;

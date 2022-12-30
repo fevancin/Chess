@@ -1,4 +1,4 @@
-#include "search.h"
+#include "header/search.h"
 
 // auxiliary function that perform the depth-first search
 Value search_step(Game *game, uint8_t depth) {

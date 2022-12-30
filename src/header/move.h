@@ -26,8 +26,20 @@ Coordinate decode_row_char(char c);
 // returns the column coordinate of a char 'a' to 'h'
 Coordinate decode_column_char(char c);
 
+// true if char is between '1' and '8'
+int is_row_char(char c);
+
+// true if char is between 'a' and 'h'
+int is_column_char(char c);
+
 // translate a string to a move, returning 0 on success
 int decode_move(char *string, Move *move);
+
+// translate coordinate to chars from '1' to '8'
+char to_row_char(Coordinate x);
+
+// translate coordiante to chars from 'a' to 'h'
+char to_column_char(Coordinate y);
 
 // prints a well formatted move to console
 void print_move(Move *move);
