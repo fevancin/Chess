@@ -13,11 +13,6 @@ char char_map[2][7] = {
     {'k', 'q', 'r', 'n', 'b', 'p', '?'}
 };
 
-char get_piece_char(Index index) {
-    if (index == EMPTY) return '.';
-    return char_map[get_color(index)][get_type(index)];
-}
-
 Type type_map[PIECES_NUM] = {
     KING, KING,
     QUEEN, QUEEN,
@@ -35,4 +30,9 @@ Type get_type(Index index) {
 
 Color get_color(Index index) {
     return ((Color)index) & ((Color)0x01);
+}
+
+char get_piece_char(Index index) {
+    if (index == EMPTY) return '.';
+    return char_map[get_color(index)][get_type(index)];
 }

@@ -36,18 +36,17 @@ void place_piece(Game *game, Index index, Coordinate x, Coordinate y) {
     game->board[x][y] = index;
 }
 
-void remove_piece(Game *game, Index i) {
-    Piece p = game->pieces[i];
+void remove_piece(Game *game, Index index) {
+    Piece p = game->pieces[index];
     game->board[get_x(p)][get_y(p)] = 0;
-    kill(&(game->pieces[i]));
+    kill(&(game->pieces[index]));
 }
 
 void move_piece(Game *game, Index index, Coordinate x, Coordinate y) {
-    Index dest_index = game->board[x][y];
-    if (dest_index != EMPTY) {
-        kill(&(game->pieces[dest_index]));
-    }
     Piece *piece = &(game->pieces[index]);
+    if (!is_alive(*piece)) return;
+    Index dest_index = game->board[x][y];
+    if (dest_index != EMPTY) kill(&(game->pieces[dest_index]));
     game->board[get_x(*piece)][get_y(*piece)] = EMPTY;
     set_x(piece, x);
     set_y(piece, y);
@@ -55,12 +54,7 @@ void move_piece(Game *game, Index index, Coordinate x, Coordinate y) {
     game->board[x][y] = index;
 }
 
-typedef struct position {
-    Coordinate x;
-    Coordinate y;
-} Position;
-
-Position initial_configuration_map[32] = {
+Coordinate initial_pieces[32][2] = {
     {7, 4}, {0, 4},                                                 // kings
     {7, 3}, {0, 3},                                                 // queens
     {7, 0}, {0, 0}, {7, 7}, {0, 7},                                 // rooks
@@ -74,7 +68,7 @@ void place_initial_configuration(Game *game) {
     empty_game(game);
     Index index = 0;
     for (index = 0; index < PIECES_NUM; index++) {
-        place_piece(game, index, initial_configuration_map[index].x, initial_configuration_map[index].y);
+        place_piece(game, index, initial_pieces[index][0], initial_pieces[index][1]);
     }
 }
 

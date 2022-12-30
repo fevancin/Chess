@@ -10,10 +10,14 @@ void empty_move(Move *move) {
 
 int is_valid_move(Move *move) {
     if (move->piece_type == UNKNOWN) return 0;
-    if (!is_valid_coordinate(move->row_to) || !is_valid_coordinate(move->column_to)) return 0;
+    if (
+        !is_valid_coordinate(move->row_to) ||
+        !is_valid_coordinate(move->column_to)
+    ) return 0;
     return 1;
 }
 
+// search the index of the piece that can legally land in the destination
 Index get_index_from_move(Game *game, Move *move) {
     Coordinate i = 0, j = 0;
     Index index = 0;
@@ -49,7 +53,6 @@ Index get_index_from_move(Game *game, Move *move) {
 int apply_move(Game *game, Move *move) {
     if (!is_valid_move(move)) return 0;
     Index index = get_index_from_move(game, move);
-    if (index == PIECES_NUM) return -1;
     if (index == EMPTY) return -1;
     if (!is_alive(game->pieces[index])) return -1;
     if (get_type(index) != move->piece_type) return -1;
@@ -102,55 +105,64 @@ int get_string_length(char *string, int max_length) {
     return -1;
 }
 
-//                 COL ROW
-//       COL     X COL ROW
-// PIECE           COL ROW
-// PIECE COL       COL ROW
-// PIECE     ROW   COL ROW
-// PIECE COL ROW   COL ROW
-// PIECE         X COL ROW
-// PIECE COL     X COL ROW
-// PIECE     ROW X COL ROW
-// PIECE COL ROW X COL ROW
+// move type that must be recognized:
+//                 COL ROW      e.g. e4
+//       COL     X COL ROW      e.g. dxe4
+// PIECE           COL ROW      e.g. Ne4
+// PIECE COL       COL ROW      e.g. Nde4
+// PIECE     ROW   COL ROW      e.g. N2e4
+// PIECE COL ROW   COL ROW      e.g. Nd2e4
+// PIECE         X COL ROW      e.g. Nxe4
+// PIECE COL     X COL ROW      e.g. Ndxe4
+// PIECE     ROW X COL ROW      e.g. N2xe4
+// PIECE COL ROW X COL ROW      e.g. Nd2xe4
+
 int decode_move(char *string, Move *move) {
     if (string == NULL || move == NULL) return -1;
     empty_move(move);
     int length = get_string_length(string, 7) - 1;
     if (length < 1) return -1;
-    if (!is_row_char(string[length])) return -1;             // last char must be a row
+    // last char must be a row
+    if (!is_row_char(string[length])) return -1;
     move->row_to = decode_row_char(string[length]);
     length--;
-    if (!is_column_char(string[length])) return -1;          // second to last must be a column
+    // second to last must be a column
+    if (!is_column_char(string[length])) return -1;
     move->column_to = decode_column_char(string[length]);
-    if (length == 0) {                                       // catch moves of the type 'f4'
+    // catch moves of the type 'e4'
+    if (length == 0) {
         move->piece_type = PAWN;
         return 0;
     }
     length--;
-    if (is_capture_char(string[length])) {                   // there may be a 'cXd4' or 'NXf4' move
+    // there may be a 'dXe4' or 'NXe4' move
+    if (is_capture_char(string[length])) {
         length--;
         if (length < 0) return -1;
-        if (length == 0 && is_column_char(string[length])) { // special pawn move of type 'dxe5'
+        // special pawn move of type 'dxe4'
+        if (length == 0 && is_column_char(string[length])) {
             move->column_from = decode_column_char(string[length]);
             move->piece_type = PAWN;
             return 0;
         }
     }
-    if (is_row_char(string[length])) {                       // catch moves of the type 'N3f4' or 'N3xf4'
+    // catch moves of the type 'N2e4' or 'N2xe4'
+    if (is_row_char(string[length])) {
         move->row_from = decode_row_char(string[length]);
         length--;
         if (length < 0) return -1;
     }
-    if (is_column_char(string[length])) {                    // catch moves of the type 'Ndf4' or 'Ndxf4'
+    // catch moves of the type 'Nde4' or 'Ndxe4'
+    if (is_column_char(string[length])) {
         move->column_from = decode_column_char(string[length]);
         length--;
         if (length < 0) return -1;
     }
-    if (!is_piece_type_char(string[length])) {               // the first char must be a piece type
-        return -1;
-    }
+    // the first char must be a piece type
+    if (!is_piece_type_char(string[length])) return -1;
     move->piece_type = decode_piece_type(string[length]);
-    if (length != 0) return -1;                              // no other chars must remain in the string
+    // no other chars must remain in the string
+    if (length != 0) return -1;
     return 0;
 }
 
