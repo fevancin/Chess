@@ -33,12 +33,14 @@ void place_piece(Game *game, Index index, Coordinate x, Coordinate y) {
     set_y(piece, y);
     revive(piece);
     depromote(piece);
+    Index dest_index = game->board[x][y];
+    if (dest_index != EMPTY) kill(&(game->pieces[dest_index]));
     game->board[x][y] = index;
 }
 
 void remove_piece(Game *game, Index index) {
     Piece p = game->pieces[index];
-    game->board[get_x(p)][get_y(p)] = 0;
+    game->board[get_x(p)][get_y(p)] = EMPTY;
     kill(&(game->pieces[index]));
 }
 

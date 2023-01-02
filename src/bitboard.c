@@ -18,7 +18,7 @@ void print_bitboard(Bitboard *bitboard) {
     int i = 0, j = 0;
     for (i = 0; i < BOARD_DIM; i++) {
         for (j = 0; j < BOARD_DIM; j++) {
-            if (get_bitboard_bit_and_shift(bitboard)) printf("1 ");
+            if (is_bitboard_bit(bitboard, i, j)) printf("1 ");
             else printf("0 ");
         }
         printf("\n");
@@ -79,6 +79,7 @@ void get_pawn_bitboard(Game *game, Bitboard *bitboard, Index index) {
 }
 
 void get_piece_bitboard(Game *game, Bitboard *bitboard, Index index, Type type) {
+    *bitboard = (Bitboard)0;
     Color color = get_color(index);
     Coordinate start_x = get_x(game->pieces[index]);
     Coordinate start_y = get_y(game->pieces[index]);
@@ -87,7 +88,6 @@ void get_piece_bitboard(Game *game, Bitboard *bitboard, Index index, Type type) 
     MoveVector *vector = NULL;
     Index landing_square = 0;
     int i = 0;
-    *bitboard = (Bitboard)0;
     for (i = 0; i < 8; i++) { // for each trail
         vector = &(move_vector[type][i]);
         new_x = start_x;

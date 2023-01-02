@@ -9,7 +9,8 @@ void set_bitboard_bit(Bitboard *bitboard, Coordinate x, Coordinate y);
 // check for the specific (x, y) bit
 int is_bitboard_bit(Bitboard *bitboard, Coordinate x, Coordinate y);
 
-// a more efficient manner of retrieving bits if done in rapid succession
+// a more efficient manner of retrieving bits if done in rapid succession.
+// bitboard is then distorted and unusable for other purposes.
 int get_bitboard_bit_and_shift(Bitboard *bitboard);
 
 // prints a visual representation of the bitboard into the console

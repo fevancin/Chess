@@ -47,7 +47,7 @@ Index get_index_from_move(Game *game, Move *move) {
         get_bitboard(game, &bitboard, index);
         if (is_bitboard_bit(&bitboard, move->row_to, move->column_to)) return index;
     }
-    return PIECES_NUM;
+    return EMPTY;
 }
 
 int apply_move(Game *game, Move *move) {
