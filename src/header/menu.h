@@ -15,15 +15,23 @@ int write_game_to_file(Game *game, char *file_name);
 // returns 0 on success
 int read_game_from_file(Game *game, char *file_name);
 
-// search and execute the best move in the current situation
-void make_computer_move(Game *game);
+typedef uint8_t MenuState;
+
+#define MAIN_MENU_STATE 0
+#define COLOR_CHOOSING_STATE 1
+#define LOAD_GAME_STATE 2
+#define EXITING_STATE 3
+#define PLAYING_STATE 4
+#define SAVE_GAME_STATE 5
+#define HELP_STATE 6
 
 void clear_console();
 
-// game mechanics of a human-computer match
-void play_game(Game *game);
+void print_menu_header();
+void print_main_menu();
+void print_color_choosing_menu();
+void print_playing_menu();
+void print_help_text();
 
-void print_intro();
-
-// menu mechanics
-void play_menu(Game *game);
+// reads max_length - 1 chars from stdin in a safe manner
+void read_string_from_stdin(char *string, int max_length);
