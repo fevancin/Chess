@@ -94,8 +94,18 @@ void print_playing_menu() {
 }
 
 void print_help_text() {
-    printf("help text...");
-    printf("\"back\" for returning to the game\n> ");
+    printf("Moves are one of the following type:\n");
+    printf("\"e4\" to move a PAWN to e4.\n");
+    printf("\"Ne4\" to move a KNIGHT to e4.\n");
+    printf("- use K for KING moves\n");
+    printf("- use Q for QUEEN moves\n");
+    printf("- use R for ROOK moves\n");
+    printf("- use N for KNIGHT moves\n");
+    printf("- use B for BISHOP moves.\n");
+    printf("\"Nxe4\" to move a KNIGHT to e4, eating another piece.\n");
+    printf("In case of ambiguity, the starting square can be\npartially or totally defined as:\n");
+    printf("\"Nd2e4\", \"Nde4\", \"N2e4\", \"Nd2xe4\", \"Ndxe4\", \"N2xe4\"\n");
+    printf("\n\"back\" for returning to the game\n> ");
 }
 
 void read_string_from_stdin(char *string, int max_length) {

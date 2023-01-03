@@ -15,16 +15,6 @@ int write_game_to_file(Game *game, char *file_name);
 // returns 0 on success
 int read_game_from_file(Game *game, char *file_name);
 
-typedef uint8_t MenuState;
-
-#define MAIN_MENU_STATE 0
-#define COLOR_CHOOSING_STATE 1
-#define LOAD_GAME_STATE 2
-#define EXITING_STATE 3
-#define PLAYING_STATE 4
-#define SAVE_GAME_STATE 5
-#define HELP_STATE 6
-
 void clear_console();
 
 void print_menu_header();
