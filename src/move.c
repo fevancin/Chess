@@ -126,7 +126,7 @@ int decode_move(char *string, Move *move) {
     if (!is_row_char(string[length])) return -1;
     move->row_to = decode_row_char(string[length]);
     length--;
-    // second to last must be a column
+    // second to last char must be a column
     if (!is_column_char(string[length])) return -1;
     move->column_to = decode_column_char(string[length]);
     // catch moves of the type 'e4'
@@ -135,7 +135,7 @@ int decode_move(char *string, Move *move) {
         return 0;
     }
     length--;
-    // there may be a 'dXe4' or 'NXe4' move
+    // there may be a 'dxe4' or 'Nxe4' move
     if (is_capture_char(string[length])) {
         length--;
         if (length < 0) return -1;

@@ -153,6 +153,7 @@ void test_game() {
             assert(game.board[x][y] == game2.board[x][y]);
         }
     }
+    assert(get_turn(&game) == get_turn(&game2));
 }
 
 void test_bitboard() {
@@ -208,6 +209,94 @@ void test_move() {
     move.row_to = BOARD_DIM;
     assert(!is_valid_move(&move));
     // get_index_from_move(&game, &move);
+    // apply_move(&game, &move);
+    assert(decode_row_char('1') == 7);
+    assert(decode_row_char('2') == 6);
+    assert(decode_row_char('3') == 5);
+    assert(decode_row_char('4') == 4);
+    assert(decode_row_char('5') == 3);
+    assert(decode_row_char('6') == 2);
+    assert(decode_row_char('7') == 1);
+    assert(decode_row_char('8') == 0);
+    assert(decode_column_char('a') == 0);
+    assert(decode_column_char('b') == 1);
+    assert(decode_column_char('c') == 2);
+    assert(decode_column_char('d') == 3);
+    assert(decode_column_char('e') == 4);
+    assert(decode_column_char('f') == 5);
+    assert(decode_column_char('g') == 6);
+    assert(decode_column_char('h') == 7);
+    assert(!is_row_char('0'));
+    assert(is_row_char('1'));
+    assert(is_row_char('2'));
+    assert(is_row_char('3'));
+    assert(is_row_char('4'));
+    assert(is_row_char('5'));
+    assert(is_row_char('6'));
+    assert(is_row_char('7'));
+    assert(is_row_char('8'));
+    assert(!is_row_char('9'));
+    assert(is_column_char('a'));
+    assert(is_column_char('b'));
+    assert(is_column_char('c'));
+    assert(is_column_char('d'));
+    assert(is_column_char('e'));
+    assert(is_column_char('f'));
+    assert(is_column_char('g'));
+    assert(is_column_char('h'));
+    assert(decode_move("", &move) != 0);
+    assert(decode_move("", NULL) != 0);
+    assert(decode_move(NULL, &move) != 0);
+    assert(decode_move("e4", &move) == 0);
+    assert(move.piece_type == PAWN);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == BOARD_DIM);
+    assert(decode_move("dxe4", &move) == 0);
+    assert(move.piece_type == PAWN);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == 3);
+    assert(decode_move("Ne4", &move) == 0);
+    assert(move.piece_type == KNIGHT);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == BOARD_DIM);
+    assert(decode_move("Kde4", &move) == 0);
+    assert(move.piece_type == KING);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == 3);
+    assert(decode_move("B2e4", &move) == 0);
+    assert(move.piece_type == BISHOP);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == 6);
+    assert(move.column_from == BOARD_DIM);
+    assert(decode_move("Qdxe4", &move) == 0);
+    assert(move.piece_type == QUEEN);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == 3);
+    assert(decode_move("Rd4xe4", &move) == 0);
+    assert(move.piece_type == ROOK);
+    assert(move.row_to == 4);
+    assert(move.column_to == 4);
+    assert(move.row_from == 4);
+    assert(move.column_from == 3);
+}
+
+void test_value() {
+    Game game;
+    place_initial_configuration(&game);
+    assert(get_game_value(&game) == 0.0);
+    move_piece(&game, 24, 4, 4); // e4
+    assert(get_game_value(&game) == 8.0);
 }
 
 int main(int argc, char *argv[]) {
@@ -219,6 +308,10 @@ int main(int argc, char *argv[]) {
     printf("Test of game: SUCCESS\n");
     test_bitboard();
     printf("Test of bitboard: SUCCESS\n");
-    printf("All test passed!\n");
+    test_move();
+    printf("Test of move: SUCCESS\n");
+    test_value();
+    printf("Test of value: SUCCESS\n");
+    printf("*** All test passed! ***\n");
     return 0;
 }
