@@ -1,6 +1,6 @@
 #include "header/search.h"
 
-// auxiliary function that perform the depth-first search
+// auxiliary function that perform the depth-first search without only caring about values (no best_move)
 Value search_step(Game *game, uint8_t depth) {
     // edge case return (leaf node)
     if (depth >= MAX_DEPTH || is_game_end(game)) {

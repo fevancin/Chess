@@ -297,6 +297,79 @@ void test_value() {
     assert(get_game_value(&game) == 0.0);
     move_piece(&game, 24, 4, 4); // e4
     assert(get_game_value(&game) == 8.0);
+    empty_game(&game);
+    place_piece(&game, 2, 3, 3); // a single WHITE QUEEN in (3,3)
+    place_piece(&game, 0, 0, 0); // place WHITE KING
+    assert(get_game_value(&game) == -10000.0);
+    place_piece(&game, 1, 7, 7); // place BLACK KING
+    assert(get_game_value(&game) == 123.0);
+}
+
+void test_search() {
+    Game game;
+    Move move;
+    empty_game(&game);
+    place_piece(&game, 0, 0, 0); // place WHITE KING
+    assert(search(&game, &move) == -10000.0);
+    assert(move.piece_type == UNKNOWN);
+    assert(move.row_from == BOARD_DIM);
+    assert(move.column_from == BOARD_DIM);
+    assert(move.row_to == BOARD_DIM);
+    assert(move.column_to == BOARD_DIM);
+}
+
+void test_menu() {
+    Index index;
+    Game game;
+    char *file_string;
+    place_initial_configuration(&game);
+    assert(write_game_to_file(NULL, NULL) < 0);
+    assert(write_game_to_file(&game, NULL) < 0);
+    assert(write_game_to_file(NULL, "test_game.txt") < 0);
+    assert(write_game_to_file(&game, "test_game.txt") == 0);
+    empty_game(&game);
+    assert(read_game_from_file(NULL, NULL) < 0);
+    assert(read_game_from_file(&game, NULL) < 0);
+    assert(read_game_from_file(NULL, "test_game.txt") < 0);
+    assert(read_game_from_file(&game, "test_game.txt") == 0);
+    if (remove("test_game.txt") != 0) fprintf(stderr, "Error in file removal\n");
+    assert(get_turn(&game) == WHITE);
+    assert(get_x(game.pieces[0]) == 7); assert(get_y(game.pieces[0]) == 4);
+    assert(get_x(game.pieces[1]) == 0); assert(get_y(game.pieces[1]) == 4);
+    assert(get_x(game.pieces[2]) == 7); assert(get_y(game.pieces[2]) == 3);
+    assert(get_x(game.pieces[3]) == 0); assert(get_y(game.pieces[3]) == 3);
+    assert(get_x(game.pieces[4]) == 7); assert(get_y(game.pieces[4]) == 0);
+    assert(get_x(game.pieces[5]) == 0); assert(get_y(game.pieces[5]) == 0);
+    assert(get_x(game.pieces[6]) == 7); assert(get_y(game.pieces[6]) == 7);
+    assert(get_x(game.pieces[7]) == 0); assert(get_y(game.pieces[7]) == 7);
+    assert(get_x(game.pieces[8]) == 7); assert(get_y(game.pieces[8]) == 1);
+    assert(get_x(game.pieces[9]) == 0); assert(get_y(game.pieces[9]) == 1);
+    assert(get_x(game.pieces[10]) == 7); assert(get_y(game.pieces[10]) == 6);
+    assert(get_x(game.pieces[11]) == 0); assert(get_y(game.pieces[11]) == 6);
+    assert(get_x(game.pieces[12]) == 7); assert(get_y(game.pieces[12]) == 2);
+    assert(get_x(game.pieces[13]) == 0); assert(get_y(game.pieces[13]) == 2);
+    assert(get_x(game.pieces[14]) == 7); assert(get_y(game.pieces[14]) == 5);
+    assert(get_x(game.pieces[15]) == 0); assert(get_y(game.pieces[15]) == 5);
+    assert(get_x(game.pieces[16]) == 6); assert(get_y(game.pieces[16]) == 0);
+    assert(get_x(game.pieces[17]) == 1); assert(get_y(game.pieces[17]) == 0);
+    assert(get_x(game.pieces[18]) == 6); assert(get_y(game.pieces[18]) == 1);
+    assert(get_x(game.pieces[19]) == 1); assert(get_y(game.pieces[19]) == 1);
+    assert(get_x(game.pieces[20]) == 6); assert(get_y(game.pieces[20]) == 2);
+    assert(get_x(game.pieces[21]) == 1); assert(get_y(game.pieces[21]) == 2);
+    assert(get_x(game.pieces[22]) == 6); assert(get_y(game.pieces[22]) == 3);
+    assert(get_x(game.pieces[23]) == 1); assert(get_y(game.pieces[23]) == 3);
+    assert(get_x(game.pieces[24]) == 6); assert(get_y(game.pieces[24]) == 4);
+    assert(get_x(game.pieces[25]) == 1); assert(get_y(game.pieces[25]) == 4);
+    assert(get_x(game.pieces[26]) == 6); assert(get_y(game.pieces[26]) == 5);
+    assert(get_x(game.pieces[27]) == 1); assert(get_y(game.pieces[27]) == 5);
+    assert(get_x(game.pieces[28]) == 6); assert(get_y(game.pieces[28]) == 6);
+    assert(get_x(game.pieces[29]) == 1); assert(get_y(game.pieces[29]) == 6);
+    assert(get_x(game.pieces[30]) == 6); assert(get_y(game.pieces[30]) == 7);
+    assert(get_x(game.pieces[31]) == 1); assert(get_y(game.pieces[31]) == 7);
+    for (index = 0; index < PIECES_NUM; index++) {
+        assert(is_alive(game.pieces[index]));
+        assert(!is_promoted(game.pieces[index]));
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -312,6 +385,10 @@ int main(int argc, char *argv[]) {
     printf("Test of move: SUCCESS\n");
     test_value();
     printf("Test of value: SUCCESS\n");
+    test_search();
+    printf("Test of search: SUCCESS\n");
+    test_menu();
+    printf("Test of menu: SUCCESS\n");
     printf("*** All test passed! ***\n");
     return 0;
 }
