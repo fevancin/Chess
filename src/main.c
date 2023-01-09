@@ -25,10 +25,16 @@ int main(int argc, char *argv[]) {
     Move move;
     MenuState state = MAIN_MENU_STATE;
     char string[PATH_MAX];
+    char menu_message[100];
+    memset(menu_message, '\0', 100);
     while (1) {
         switch (state) {
         case MAIN_MENU_STATE:
             print_menu_header();
+            if (menu_message[0] != '\0') {
+                printf("%s\n", menu_message);
+                menu_message[0] = '\0';
+            }
             print_main_menu();
             read_string_from_stdin(string, PATH_MAX);
             if (strcmp(string, "play\n") == 0) state = COLOR_CHOOSING_STATE;
@@ -59,10 +65,10 @@ int main(int argc, char *argv[]) {
             }
             *strchr(string, '\n') = '\0'; // replace first \n with \0
             if (read_game_from_file(&game, string) != 0) {
-                fprintf(stderr, "Error in file read\n");
+                strcpy(menu_message, "Error in file read\n");
                 state = MAIN_MENU_STATE;
             } else {
-                printf("File \"%s\" read successfully\n", string);
+                strcpy(menu_message, "File read successfully\n");
                 state = PLAYING_STATE;
             }
             break;
@@ -74,6 +80,10 @@ int main(int argc, char *argv[]) {
         case PLAYING_STATE:
             clear_console();
             print_game(&game);
+            if (menu_message[0] != '\0') {
+                printf("%s\n", menu_message);
+                menu_message[0] = '\0';
+            }
             print_playing_menu();
             read_string_from_stdin(string, PATH_MAX);
             if (strcmp(string, "help\n") == 0) state = HELP_STATE;
@@ -83,7 +93,7 @@ int main(int argc, char *argv[]) {
                 decode_move(string, &move) != 0 ||
                 apply_move(&game, &move) != 0
             ) {
-                printf("Move not valid\n");
+                strcpy(menu_message, "Move not valid\n");
                 continue;
             }
             if (state == PLAYING_STATE) {
@@ -103,7 +113,7 @@ int main(int argc, char *argv[]) {
             *strchr(string, '\n') = '\0'; // replace first \n with \0
             if (write_game_to_file(&game, string) != 0) {
                 fprintf(stderr, "Error in file write\n");
-            } else printf("File \"%s\" written successfully\n", string);
+            } else strcpy(menu_message, "File written successfully\n");
             state = PLAYING_STATE;
             break;
         case HELP_STATE:
