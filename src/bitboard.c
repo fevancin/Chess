@@ -15,7 +15,7 @@ int get_bitboard_bit_and_shift(Bitboard *bitboard) {
 }
 
 void print_bitboard(Bitboard *bitboard) {
-    int i = 0, j = 0;
+    Index i = 0, j = 0;
     for (i = 0; i < BOARD_DIM; i++) {
         for (j = 0; j < BOARD_DIM; j++) {
             if (is_bitboard_bit(bitboard, i, j)) printf("1 ");
