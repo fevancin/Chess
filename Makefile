@@ -1,11 +1,11 @@
 ifeq ($(OS),Windows_NT) # differences in Windows systems
 	RM = del
 	CHESS = chess.exe
-	TEST = test.exe
+	TEST = .\test.exe
 else
 	RM = rm
 	CHESS = chess
-	TEST = test
+	TEST = ./test
 endif
 
 chess: obj/main.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
@@ -13,6 +13,7 @@ chess: obj/main.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o 
 
 test: obj/tests.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
 	gcc -o test obj/tests.o obj/menu.o obj/search.o obj/value.o obj/bitboard.o obj/move.o obj/game.o obj/piece.o obj/utils.o
+	$(TEST)
 
 clear:
 	$(RM) obj\tests.o
