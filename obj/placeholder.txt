@@ -1,0 +1,1 @@
+In this folder there will be intermediate object files for the compilation process, please don't remove anything.
